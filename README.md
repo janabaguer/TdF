@@ -4,9 +4,6 @@
 
 This is a personal research project comparing four modeling paradigms — classical regression, tree-based ensembles, and hierarchical Bayesian models — on two prediction tasks in professional cycling. The goal isn't just point-prediction accuracy, but understanding *when* each modeling approach is actually useful to a sports scientist: what it gets right, where it's overconfident, and what it costs in interpretability.
 
-## Why this project
-
-I wanted a project that let me practice building and honestly comparing statistical and ML methods on real, messy data — not a toy dataset — and that reflects something I'd want to talk about in a master's application or a sports-science interview: not "I took a Bayesian statistics course," but "I built a framework to compare how different models handle uncertainty in a real forecasting problem."
 
 ## Tasks
 
@@ -61,10 +58,22 @@ grand-tour-ml/
 
 ## Data sources
 
-- [ProCyclingStats](https://www.procyclingstats.com) — rider results, stage profiles, startlists
-- Official Grand Tour race data (stage profiles, categorization)
+The project uses the **TidyTuesday "Tour de France" dataset** (week of 2020-04-07), plus the R package it was built from. `python src/load_data.py` downloads all raw files into `data/raw/` (pinned to the commits below) and builds `data/processed/stage_results.csv`.
 
-Data acquisition respects each source's terms of service; no proprietary team data is used.
+| Dataset | Files used | Content | License |
+|---|---|---|---|
+| **TidyTuesday: Tour de France** ([`rfordatascience/tidytuesday`](https://github.com/rfordatascience/tidytuesday/tree/302efe5e2953e75b63ceb9787c2f4f823a93171e/data/2020/2020-04-07), `data/2020/2020-04-07`, commit `302efe5`) | `tdf_stages.csv`, `tdf_winners.csv`, `stage_data.csv` | Stage distance and type, 1903–2017 (originally from [Kaggle](https://www.kaggle.com/jaminliu/a-brief-tour-of-tour-de-france-in-numbers/data)); overall winners; rider-stage results 1903–2019 | CC0 1.0 |
+| **`tdf` R package** ([`alastairrushworth/tdf`](https://github.com/alastairrushworth/tdf), commit `20d3b2e`) | `data/editions.rda` | Same rider-stage results, with **full** stage times (originally scraped from Wikipedia) | GPL-2 |
+
+**Why both:** in the TidyTuesday `stage_data.csv`, the `time` and `elapsed` columns lost their hours and minutes when exported to CSV (only the seconds survived; see `notebooks/01_eda.ipynb`, section 5). Rider results and times therefore come from the `tdf` package; stage characteristics come from TidyTuesday.
+
+**References**
+
+- R for Data Science Online Learning Community (2020). *TidyTuesday: Tour de France* (2020-04-07). https://github.com/rfordatascience/tidytuesday/tree/main/data/2020/2020-04-07
+- Rushworth, A. (2020). *tdf: Tour de France data* (R package, version 0.0.1). https://github.com/alastairrushworth/tdf
+- Liu, J. *A brief tour of Tour de France in numbers* (Kaggle dataset). https://www.kaggle.com/jaminliu/a-brief-tour-of-tour-de-france-in-numbers
+
+All sources are public; no proprietary team data is used.
 
 ## License
 
